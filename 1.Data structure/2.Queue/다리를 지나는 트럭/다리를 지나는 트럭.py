@@ -1,29 +1,12 @@
-import java.util.LinkedList; 
-import java.util.Queue; 
-
-class Solution {
-    public static int solution(int bridge_length, int weight, int[] truck_weights) {
-        int time = bridge_length;
-        Queue<Integer> bridge = new LinkedList<>();
-        bridge.add(truck_weights[0]);
-        int sumBridge =  truck_weights[0];
-        int i = 1;
-        while (i < truck_weights.length){
-            time++;
-            if (bridge_length <= bridge.size()){
-                sumBridge -= bridge.poll();
-            }
-            if (weight >= sumBridge + truck_weights[i]){
-                bridge.add(truck_weights[i]);
-                sumBridge += truck_weights[i];
-                i++;
-                if (i >= truck_weights.length){
-                    break;
-                }
-            }else{
-                bridge.add(0);
-            }
-        }
-        return time+1;
-    }
-}
+def solution(bridge_length, weight, truck_weights):
+    bridge = [0 for x in range(bridge_length)]
+    time = bridge_length
+    while len(truck_weights) > 0:
+        time += 1
+        bridge.pop(0)
+        if weight >= sum(bridge) + truck_weights[0]:
+            bridge.append(truck_weights[0])
+            truck_weights.pop(0)
+        else:
+            bridge.append(0)
+    return time
