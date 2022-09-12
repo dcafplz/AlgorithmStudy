@@ -17,3 +17,22 @@ def solution(id_list, report, k):
             reportersCount[reporters[i]] +=1
 
     return list(reportersCount.values())
+
+# 
+
+def solution(id_list, report, k):
+    reportee = {}
+    reporter = {x:0 for x in id_list}
+    for r in report:
+        a, b = r.split(' ')
+        if b in reportee:
+            reportee[b].add(a)
+        else:
+            reportee[b] = {a}
+        
+    for key in reportee:
+        if len(reportee[key]) >= k:
+            for i in reportee[key]:
+                reporter[i] += 1
+    
+    return list(reporter.values())

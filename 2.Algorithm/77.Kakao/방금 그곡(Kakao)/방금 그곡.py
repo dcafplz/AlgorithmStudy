@@ -18,3 +18,33 @@ def solution(m, musicinfos):
                 answer = [temp[2], time]
                 break
     return answer[0]
+
+
+#
+
+s = {'C#':'c', 'D#':'d', 'F#':'f', 'G#':'g', 'A#':'a'}
+
+def to_min(time):
+    h, m = time.split(':')
+    return int(h) * 60 + int(m)
+
+def change(code):
+    for i in s:
+        code = code.replace(i, s[i])
+    return code
+
+def solution(m, musicinfos):
+
+    answer = ["(None)", 0]
+    m = change(m)
+    
+    for musicinfo in musicinfos:
+        start, end, title, code = musicinfo.split(",")
+        time = to_min(end) - to_min(start)
+        if time <= answer[1]: continue
+        
+        code = change(code)
+        if m in (code * (1 + time//len(code)))[:time] and time > answer[1]:
+            answer = [title, time]
+        
+    return answer[0]
